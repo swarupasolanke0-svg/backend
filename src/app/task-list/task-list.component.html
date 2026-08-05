@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Task Manager (MEAN CRUD)</h1>
+
+  <app-task-form
+    [taskToEdit]="taskToEdit"
+    (save)="onSave($event)"
+    (cancel)="onCancelEdit()">
+  </app-task-form>
+
+  <div class="card">
+    <h3>All Tasks</h3>
+
+    <p *ngIf="loading">Loading tasks...</p>
+    <p *ngIf="errorMessage" style="color: #e74c3c;">{{ errorMessage }}</p>
+    <p *ngIf="!loading && tasks.length === 0 && !errorMessage">No tasks yet. Add one above!</p>
+
+    <div class="task-item" *ngFor="let task of tasks">
+      <div>
+        <strong>{{ task.title }}</strong>
+        <span class="status-badge" [ngClass]="'status-' + task.status">{{ task.status }}</span>
+        <p style="margin: 4px 0 0; color: #666; font-size: 13px;">{{ task.description }}</p>
+      </div>
+      <div>
+        <button class="btn-secondary" (click)="onEdit(task)">Edit</button>
+        <button class="btn-danger" (click)="onDelete(task._id)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
